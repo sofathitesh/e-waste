@@ -3,9 +3,10 @@ from django.db.models import Sum
 
 def calculate_generated(request):
 	user = request.user
+	newdate = ''
+	date = request.POST['date'].split("/")
+	newdate = date[2] + "-" + date[0] + "-" + date[1]
 	if user.is_superuser:
-		date = request.POST['date'].split("/")
-		newdate = date[2] + "-" + date[0] + "-" + date[1]
   		categories = WasteGenerated.objects.values_list('category_id',flat=True).\
 			filter(date=unicode(newdate)).distinct()
 	else:
@@ -30,10 +31,10 @@ def calculate_generated(request):
 	return generated
 
 def calculate_stored(super_user,request):
-	newdate =''
+	newdate = ''
+	date = request.POST['date'].split("/")
+	newdate = date[2] + "-" + date[0] + "-" + date[1]
 	if super_user == True:
-		date = request.POST['date'].split("/")
-		newdate = date[2] + "-" + date[0] + "-" + date[1]		
 		categories = WasteStored.objects.values_list('category_id',flat=True).filter(date=newdate).\
 		distinct()
 	else:
@@ -62,15 +63,15 @@ def calculate_stored(super_user,request):
 def calculate_sent(request):
 	user = request.user
 	newdate = ''
+	date = request.POST['date'].split("/")
+	newdate = date[2] + "-" + date[0] + "-" + date[1]
 	if user.is_superuser:
-		date = request.POST['date'].split("/")
-		newdate = date[2] + "-" + date[0] + "-" + date[1]
 		categories = WasteSentToRecycler.objects.values_list('category_id',flat=True).filter(date=newdate).\
 		distinct()
 	else:
 		dept = Department.objects.get(user=user.id)
-		categories = WasteSentToRecycler.objects.filter(department=dept.id).\
-		values_list('category_id',flat=True, date=newdate).distinct()
+		categories = WasteSentToRecycler.objects.filter(department=dept.id,date=newdate).\
+		values_list('category_id',flat=True).distinct()
 	generated = []
 	for val in categories:
 		temp = {}
