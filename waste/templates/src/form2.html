@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+        <title>
+            Form
+        </title> 
+{% endblock %}
+  {{ form.media }}
+</head>
+<body>
+	{% block content %}
+	<div class='form-container'>
+	<form role="form" method="POST" action='{% url 'waste.src.views.generate_report' %}'>
+	       {% csrf_token %}
+<table>
+<tr>
+<td>
+Select Date
+</td>
+<td>
+<input type="text" class="datepicker" name="date">
+</td>
+</tr>
+<tr>
+<td>
+<input type="submit" value="Search">
+</td>
+</tr>
+</table>
+	</form>
+    {% endblock %}
+</body>

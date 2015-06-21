@@ -1,0 +1,43 @@
+{% load i18n %} {% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+  </head>
+
+  <body>
+
+    <div class="container">
+	<div class="error">
+        {% if form.errors.items|length == 1 %}<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Invalid Username and Password 
+</div>{% endif %}
+    </div>         
+        <form action="{{ app_path }}" method="post" class="form-signin" role="form" id="login-form">{% csrf_token %}
+        <h2 class="form-signin-heading">User Login</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+<input id="id_username" class="form-control" placeholder="User" maxlength="254" name="username" type="text" />
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input id="id_password" name="password" class="form-control" placeholder="Password" type="password" />
+    <input type="hidden" name="this_is_the_login_form" value="1" />
+    <input type="hidden" name="next" value="/" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
+  
+
+</body></html>
