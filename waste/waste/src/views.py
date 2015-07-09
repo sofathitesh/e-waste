@@ -102,7 +102,7 @@ def main_form(request):
 				department = Department.objects.get(user=user.id)
 		except:
 			department = Department.objects.get(user=user.id)
-		if request.POST['select_department']:
+		if request.POST.get('select_department'):
 			for quantity, category, description in itertools.izip(request.POST.getlist("quantity"), request.POST.getlist("category"), request.POST.getlist("description")):
 				if quantity != "0":
 					cat = Category.objects.get(id=category)
@@ -176,6 +176,8 @@ def main_form(request):
 		waste_sent = WasteSentToRecyclerForm()
  		#category = Category.objects.all()
 		#description = Description.objects.all()
+
+		print dept_form
 		forms = {'date_form':DateRangeSelectionForm(request.POST),'dept_form':dept_form,#'formset': formset,
 		'waste_stored': waste_stored,'waste_sent':waste_sent,'user':user,
 		'user_selections': user_selections,'user_selections_two': user_selections_two,
@@ -204,8 +206,24 @@ def generate_report(request):
 	waste_generated = calculate_generated(request)
 	waste_stored = calculate_stored(is_superuser,request)
 	waste_sent = calculate_sent(request)
+	user = request.user
+	
+	# else:)
+	
+	# department = Department.objects.filter(title__startswith=user)
+	# department = Department.objects.filter(user=user.id).values('head')
+	# department = Department.objects.filter(user=user.id)
+	# department = Department.objects.filter(user=user.id)
+	# Department.objects.get(user=user.id)
+	
+	# print add
+	if is_superuser:
+		department = org
+	else:
+		department = Department.objects.get(user=user.id)
+		print department
 	return render(request,'src/report.html',{'waste_generated':waste_generated,
-		'waste_sent':waste_sent,'waste_stored':waste_stored,'org':org,'add':add})
+		'waste_sent':waste_sent,'waste_stored':waste_stored,'org':department,'add':add})
 
 
 
