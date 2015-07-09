@@ -15,7 +15,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'waste',
         'USER': 'root',
-        'PASSWORD': 'sofat',
+        'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -46,7 +46,7 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    '/home/sofat/waste-management/waste/static',
+    '/home/mandeep/work/Django/e-waste/waste/static',
 )
 
 STATICFILES_FINDERS = (
